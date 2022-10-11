@@ -4,10 +4,8 @@ const userSchema = new Schema({
   name: { type: String, default: "Anonymus" },
   email: { type: String, required: true },
   password: { type: String, required: true },
-  // TODO
-  // 1. verify user's gender and role with enum
-  gender: ["Male", "Female"],
-  role: ["admin", "user"],
+  gender: { type: String, enum: ["Male", "Female"] },
+  role: { type: String, enum: ["admin", "user"], default: "user" },
 });
 
 const User = model("user", userSchema);
