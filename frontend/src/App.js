@@ -1,7 +1,16 @@
+import { Box } from "@chakra-ui/react";
+
 import "./App.css";
+import Navbar from "./components/Navbar/Navbar";
+import AllRoutes from "./routes/AllRoutes";
 
 function App() {
-  return <div className="App">blog app</div>;
+  return (
+    <Box>
+      <Navbar />
+      <AllRoutes />
+    </Box>
+  );
 }
 
 export default App;
