@@ -12,6 +12,10 @@ app.get("/", async (req, res) => {
   }
 });
 
+app.post("/login", (req, res) => {
+  res.send("login");
+});
+
 app.post("/create", async (req, res) => {
   let data = req.body;
 
