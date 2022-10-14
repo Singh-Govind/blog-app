@@ -16,8 +16,8 @@ export default function Navbar() {
           <NavLink to="/">
             <Text>Home</Text>
           </NavLink>
-          <NavLink to="/admin">
-            <Text>Admin</Text>
+          <NavLink to="/login">
+            <Text>Login</Text>
           </NavLink>
         </Flex>
       </Flex>
