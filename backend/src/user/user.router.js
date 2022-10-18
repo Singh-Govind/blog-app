@@ -1,6 +1,7 @@
 const express = require("express");
-const User = require("./user.model");
 const jwt = require("jsonwebtoken");
+const User = require("./user.model");
+const OtpModel = require("./otp.model");
 
 const app = express();
 
@@ -45,6 +46,41 @@ app.post("/create", async (req, res) => {
     res.send(newUser);
   } catch (e) {
     res.send(e.message);
+  }
+});
+
+app.post("/reset-password/getotp", async (req, res) => {
+  const { email } = req.body;
+  let otp = otpGenerator.generate(6, {
+    upperCaseAlphabets: false,
+    specialChars: false,
+  });
+
+  transporter
+    .sendMail({
+      to: email,
+      from: "b@b.com",
+      subject: "reset-password OTP",
+      text: `Your password reset request is successfull, OTP: ${otp}`,
+    })
+    .then(() => console.log("Email sent"));
+
+  const otpDb = await OtpModel.create({ otp: otp, email: email });
+
+  res.send(otp);
+});
+
+app.post("/reset-password/reset", async (req, res) => {
+  const { email, newPassword, otp } = req.body;
+  const testOtp = await OtpModel.findOne({ email, otp });
+  if (testOtp) {
+    const updatePass = await User.findOneAndUpdate(
+      { email },
+      { password: newPassword }
+    );
+    return res.send("Password updated");
+  } else {
+    return res.status(401).send("INVALID OTP");
   }
 });
 
