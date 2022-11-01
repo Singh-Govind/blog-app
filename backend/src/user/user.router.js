@@ -70,6 +70,11 @@ app.post("/reset-password/getotp", async (req, res) => {
   res.send(otp);
 });
 
+app.get("/github/callback", (req, res) => {
+  // console.log(req.query.code)
+  res.send("signin with github success");
+});
+
 app.post("/reset-password/reset", async (req, res) => {
   const { email, newPassword, otp } = req.body;
   const testOtp = await OtpModel.findOne({ email, otp });
